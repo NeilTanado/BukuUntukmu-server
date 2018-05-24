@@ -10,4 +10,6 @@ router.get('/readbook', Controller.readBook);
 
 router.delete('/deletebook/:id', Controller.deleteBook);
 
+router.post('/onebook',Controller.readOneBook)
+
 module.exports = router;

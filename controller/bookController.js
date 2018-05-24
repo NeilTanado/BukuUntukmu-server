@@ -13,6 +13,7 @@ module.exports ={
       judul:req.body.judul,
       penulis: req.body.penulis,
       penerbit: req.body.penerbit,
+      description:req.body.description,
       owner:decoded.id,
       image : req.file.imageURL,
     });
@@ -44,12 +45,27 @@ module.exports ={
 
   readBook:(req,res)=>{
     Book.find()
-    .populate('user')
-    .populate('commentBook')
+    .populate('owner')
     .then(data=>{
       res.status(200).json({
         message: 'data dikirim',
         data
+      })
+    })
+    .catch((err) => {
+      res.status(400).json({
+        message: 'anda tidak ada authorized'
+      })
+    })
+  },
+
+  readOneBook:(req,res)=>{
+    Book.findOne({_id : req.body.id})
+    .populate('user')
+    .then((value) => {
+      res.status(200).json({
+        message:'data dikirim',
+        value
       })
     })
     .catch((err) => {
